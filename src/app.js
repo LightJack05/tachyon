@@ -187,6 +187,7 @@ function activate(item) {
     history.push(current);
     crumbNames.push({name: item.name, icon: item.icon});
     current = item.children;
+    window.history.pushState(null, '');
     render(current);
     renderBreadcrumb();
   } else {
@@ -197,6 +198,13 @@ function activate(item) {
     renderBreadcrumb();
   }
 }
+
+/* ── Browser back (mouse button, Alt+Left, keyboard, any gesture) ──────────── */
+window.addEventListener('popstate', () => {
+  if (history.length) { current = history.pop(); crumbNames.pop(); }
+  else current = root;
+  render(current); renderBreadcrumb();
+});
 
 /* ── Global keydown ────────────────────────────────────────────────────────── */
 window.addEventListener('keydown', e => {
