@@ -29,15 +29,17 @@ const input      = document.getElementById('search-input');
 const results    = document.getElementById('search-results');
 const breadcrumb = document.getElementById('breadcrumb');
 
-let root, current, allServices = [], history = [], crumbNames = [];
-let matchedItems = [], selectedIdx = -1;
+let root, current, history = [], crumbNames = [];
+let matchedItems = [], selectedIdx = -1, searchScope = [];
 
-/* ── Collect every leaf service from the tree ──────────────────────────────── */
-function collectServices(items) {
+/* ── Collect every leaf service from a subtree ─────────────────────────────── */
+function collectFrom(items) {
+  const out = [];
   items.forEach(item => {
-    if (item.children) collectServices(item.children);
-    else allServices.push(item);
+    if (item.children) out.push(...collectFrom(item.children));
+    else out.push(item);
   });
+  return out;
 }
 
 /* ── Fuzzy match on joined corpus ───────────────────────────────────────────── */
@@ -70,14 +72,15 @@ function highlight(needle, text) {
 }
 
 function searchServices(query) {
-  return allServices.filter(s => {
+  return searchScope.filter(s => {
     const corpus = [s.name, ...(s.keywords || [])].join(' ');
     return fuzzy(query, corpus);
   });
 }
 
 /* ── Search overlay ────────────────────────────────────────────────────────── */
-function openSearch() {
+function openSearch(scope) {
+  searchScope = scope;
   overlay.classList.remove('hidden');
   input.value = '';
   matchedItems = [];
@@ -234,7 +237,8 @@ window.addEventListener('popstate', () => {
 /* ── Global keydown ────────────────────────────────────────────────────────── */
 window.addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT') return;
-  if (e.key === '/') { e.preventDefault(); openSearch(); return; }
+  if (e.key === '/') { e.preventDefault(); openSearch(collectFrom(current)); return; }
+  if (e.key === '?') { e.preventDefault(); openSearch(collectFrom(root)); return; }
   if (e.key === 'Escape') {
     if (history.length) { current = history.pop(); crumbNames.pop(); }
     else current = root;
@@ -267,7 +271,6 @@ fetch('config.yaml')
       }
     }
 
-    collectServices(root);
     current = root;
     render(current);
     renderBreadcrumb();
