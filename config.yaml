@@ -2,30 +2,132 @@
 # Edit this file to define your dashboard groups and services.
 # In Kubernetes, this file is mounted via a ConfigMap.
 
+- name: Dev
+  shortcut: d
+  icon: "💻"
+  keywords: [dev, code, develop]
+  children:
+    - name: GitHub
+      shortcut: g
+      icon: "🐙"
+      keywords: [git, repo, source, code, github]
+      url: https://github.com
+    - name: GitLab
+      shortcut: l
+      icon: "🦊"
+      keywords: [git, repo, gitlab, ci, pipeline]
+      url: https://gitlab.com
+    - name: Codeberg
+      shortcut: c
+      icon: "🗻"
+      keywords: [git, repo, codeberg, forge]
+      url: https://codeberg.org
+    - name: Stack Overflow
+      shortcut: s
+      icon: "📚"
+      keywords: [stack, overflow, help, questions, answers]
+      url: https://stackoverflow.com
+
+- name: Infra
+  shortcut: i
+  icon: "🖥️"
+  keywords: [infra, infrastructure, server, ops]
+  children:
+    - name: Proxmox
+      shortcut: p
+      icon: "🧱"
+      keywords: [proxmox, vm, virtual, hypervisor]
+      url: https://proxmox.local:8006
+    - name: Portainer
+      shortcut: o
+      icon: "🐳"
+      keywords: [portainer, docker, containers]
+      url: https://portainer.local:9443
+    - name: Grafana
+      shortcut: g
+      icon: "📊"
+      keywords: [grafana, monitoring, metrics, dashboard]
+      url: https://grafana.local:3000
+    - name: Router
+      shortcut: r
+      icon: "📡"
+      keywords: [router, network, gateway, openwrt]
+      url: http://192.168.1.1
+
+- name: Media
+  shortcut: m
+  icon: "🎬"
+  keywords: [media, movies, music, tv]
+  children:
+    - name: Jellyfin
+      shortcut: j
+      icon: "🎞️"
+      keywords: [jellyfin, movies, tv, streaming, media]
+      url: https://jellyfin.local
+    - name: Navidrome
+      shortcut: n
+      icon: "🎵"
+      keywords: [navidrome, music, audio, streaming]
+      url: https://navidrome.local
+    - name: Sonarr
+      shortcut: s
+      icon: "📺"
+      keywords: [sonarr, tv, shows, series, download]
+      url: https://sonarr.local:8989
+    - name: Radarr
+      shortcut: r
+      icon: "🎥"
+      keywords: [radarr, movies, download]
+      url: https://radarr.local:7878
+
+- name: Productivity
+  shortcut: p
+  icon: "📋"
+  keywords: [productivity, notes, tasks, work]
+  children:
+    - name: Nextcloud
+      shortcut: n
+      icon: "☁️"
+      keywords: [nextcloud, cloud, files, notes, calendar]
+      url: https://nextcloud.local
+    - name: Gitea
+      shortcut: g
+      icon: "🍵"
+      keywords: [gitea, git, self-hosted, forge]
+      url: https://gitea.local:3000
+    - name: Vaultwarden
+      shortcut: v
+      icon: "🔐"
+      keywords: [vault, bitwarden, passwords, secrets]
+      url: https://vault.local
+    - name: Paperless
+      shortcut: p
+      icon: "📄"
+      keywords: [paperless, documents, scan, archive]
+      url: https://paperless.local
+
 - name: External
   shortcut: e
   icon: "🌐"
   keywords: [external, web, internet]
   children:
-    - name: GitHub
-      shortcut: g
-      icon: "🐙"
-      keywords: [git, repo, source, code]
-      url: https://github.com
-
-    - name: Example Service
-      shortcut: x
-      icon: "⚡"
-      keywords: [example, demo]
-      url: https://example.com
-
-- name: Internal
-  shortcut: i
-  icon: "🏠"
-  keywords: [internal, local, home]
-  children:
-    - name: Router
-      shortcut: r
-      icon: "📡"
-      keywords: [router, network, gateway]
-      url: http://192.168.1.1
+    - name: Hacker News
+      shortcut: h
+      icon: "🔶"
+      keywords: [hacker, news, hn, tech]
+      url: https://news.ycombinator.com
+    - name: Lobsters
+      shortcut: l
+      icon: "🦞"
+      keywords: [lobsters, news, tech, community]
+      url: https://lobste.rs
+    - name: Arch Wiki
+      shortcut: a
+      icon: "📖"
+      keywords: [arch, wiki, linux, docs, manual]
+      url: https://wiki.archlinux.org
+    - name: MDN
+      shortcut: m
+      icon: "🦊"
+      keywords: [mdn, mozilla, web, docs, html, css, js]
+      url: https://developer.mozilla.org

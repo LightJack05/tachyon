@@ -161,7 +161,44 @@ body {
   transition: border-color 0.1s, box-shadow 0.1s;
 }
 
-#search-results li:hover {
+#search-results li:hover,
+#search-results li.selected {
   border-color: var(--accent);
   box-shadow: 0 0 10px var(--glow-soft);
+}
+
+.result-main {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.result-icon { font-size: 1.1rem; line-height: 1; }
+
+.result-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.result-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+
+.kw {
+  font-size: 0.7rem;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+mark {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
 }
