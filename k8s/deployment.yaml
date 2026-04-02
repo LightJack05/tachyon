@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tachyon
+  namespace: default
+  labels:
+    app: tachyon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tachyon
+  template:
+    metadata:
+      labels:
+        app: tachyon
+    spec:
+      containers:
+        - name: tachyon
+          image: tachyon:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config
+              mountPath: /usr/share/nginx/html/config.yaml
+              subPath: config.yaml
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: tachyon-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tachyon
+  namespace: default
+spec:
+  selector:
+    app: tachyon
+  ports:
+    - port: 80
+      targetPort: 80

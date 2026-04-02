@@ -1,0 +1,8 @@
+services:
+  tachyon:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      # Mount local config.yaml into the web root at runtime
+      - ./config.yaml:/usr/share/nginx/html/config.yaml:ro

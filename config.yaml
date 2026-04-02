@@ -1,0 +1,31 @@
+# Tachyon Configuration
+# Edit this file to define your dashboard groups and services.
+# In Kubernetes, this file is mounted via a ConfigMap.
+
+- name: External
+  shortcut: e
+  icon: "🌐"
+  keywords: [external, web, internet]
+  children:
+    - name: GitHub
+      shortcut: g
+      icon: "🐙"
+      keywords: [git, repo, source, code]
+      url: https://github.com
+
+    - name: Example Service
+      shortcut: x
+      icon: "⚡"
+      keywords: [example, demo]
+      url: https://example.com
+
+- name: Internal
+  shortcut: i
+  icon: "🏠"
+  keywords: [internal, local, home]
+  children:
+    - name: Router
+      shortcut: r
+      icon: "📡"
+      keywords: [router, network, gateway]
+      url: http://192.168.1.1
