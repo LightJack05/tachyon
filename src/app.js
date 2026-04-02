@@ -1,9 +1,10 @@
-const app     = document.getElementById('app');
-const overlay = document.getElementById('search-overlay');
-const input   = document.getElementById('search-input');
-const results = document.getElementById('search-results');
+const app        = document.getElementById('app');
+const overlay    = document.getElementById('search-overlay');
+const input      = document.getElementById('search-input');
+const results    = document.getElementById('search-results');
+const breadcrumb = document.getElementById('breadcrumb');
 
-let root, current, allServices = [], history = [];
+let root, current, allServices = [], history = [], crumbNames = [];
 let matchedItems = [], selectedIdx = -1;
 
 /* ── Collect every leaf service from the tree ──────────────────────────────── */
@@ -128,6 +129,45 @@ input.addEventListener('keydown', e => {
   if (e.key === 'Enter') openSelected();
 });
 
+/* ── Breadcrumb ────────────────────────────────────────────────────────────── */
+function renderBreadcrumb() {
+  const frag = document.createDocumentFragment();
+
+  const root_crumb = document.createElement('span');
+  root_crumb.className = 'crumb' + (crumbNames.length === 0 ? ' current' : ' link');
+  root_crumb.textContent = '~';
+  if (crumbNames.length > 0) {
+    root_crumb.addEventListener('click', () => {
+      current = root; history = []; crumbNames = [];
+      render(current); renderBreadcrumb();
+    });
+  }
+  frag.appendChild(root_crumb);
+
+  crumbNames.forEach(({name, icon}, i) => {
+    const sep = document.createElement('span');
+    sep.className = 'sep';
+    sep.textContent = '/';
+    frag.appendChild(sep);
+
+    const crumb = document.createElement('span');
+    const isCurrent = i === crumbNames.length - 1;
+    crumb.className = 'crumb' + (isCurrent ? ' current' : ' link');
+    crumb.textContent = `${icon} ${name}`;
+    if (!isCurrent) {
+      crumb.addEventListener('click', () => {
+        current = history[i + 1];
+        history = history.slice(0, i + 1);
+        crumbNames = crumbNames.slice(0, i + 1);
+        render(current); renderBreadcrumb();
+      });
+    }
+    frag.appendChild(crumb);
+  });
+
+  breadcrumb.replaceChildren(frag);
+}
+
 /* ── Tile rendering ────────────────────────────────────────────────────────── */
 function render(items) {
   const frag = document.createDocumentFragment();
@@ -145,13 +185,16 @@ function render(items) {
 function activate(item) {
   if (item.children) {
     history.push(current);
+    crumbNames.push({name: item.name, icon: item.icon});
     current = item.children;
     render(current);
+    renderBreadcrumb();
   } else {
     window.open(item.url, '_blank');
-    history = [];
+    history = []; crumbNames = [];
     current = root;
     render(current);
+    renderBreadcrumb();
   }
 }
 
@@ -160,8 +203,9 @@ window.addEventListener('keydown', e => {
   if (e.target.tagName === 'INPUT') return;
   if (e.key === '/') { e.preventDefault(); openSearch(); return; }
   if (e.key === 'Escape') {
-    current = history.length ? history.pop() : root;
-    render(current);
+    if (history.length) { current = history.pop(); crumbNames.pop(); }
+    else current = root;
+    render(current); renderBreadcrumb();
     return;
   }
   const item = current.find(i => i.shortcut === e.key);
@@ -176,4 +220,5 @@ fetch('config.yaml')
     collectServices(root);
     current = root;
     render(current);
+    renderBreadcrumb();
   });

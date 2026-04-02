@@ -30,12 +30,49 @@ body {
   min-height: 100vh;
 }
 
+/* ── Main layout wrapper ───────────────────────────────────────────────────── */
+#main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: min(960px, 90vw);
+}
+
+/* ── Breadcrumb ────────────────────────────────────────────────────────────── */
+#breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+  min-height: 1.5rem;
+}
+
+#breadcrumb .sep {
+  color: var(--border);
+}
+
+#breadcrumb .crumb {
+  color: var(--muted);
+}
+
+#breadcrumb .crumb.link {
+  color: var(--accent);
+  cursor: pointer;
+  transition: opacity 0.1s;
+}
+
+#breadcrumb .crumb.link:hover { opacity: 0.75; }
+
+#breadcrumb .crumb.current {
+  color: var(--text);
+}
+
 /* ── App container ─────────────────────────────────────────────────────────── */
 #app {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1.25rem;
-  width: min(960px, 90vw);
 }
 
 /* ── Drill-down animation ──────────────────────────────────────────────────── */
