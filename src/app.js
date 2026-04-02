@@ -22,10 +22,8 @@ const TAGLINES = [
   'Enterprise-grade clicking experience.',
   'Your /dev/null moment of the day.',
 ];
-document.getElementById('tagline').textContent =
-  TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
-
 const app        = document.getElementById('app');
+const taglineEl  = document.getElementById('tagline');
 const overlay    = document.getElementById('search-overlay');
 const input      = document.getElementById('search-input');
 const results    = document.getElementById('search-results');
@@ -251,7 +249,24 @@ window.addEventListener('keydown', e => {
 fetch('config.yaml')
   .then(r => r.text())
   .then(text => {
-    root = jsyaml.load(text);
+    const config = jsyaml.load(text);
+
+    // Support both legacy flat-array format and new object format.
+    if (Array.isArray(config)) {
+      root = config;
+      const pick = Math.floor(Math.random() * TAGLINES.length);
+      taglineEl.textContent = TAGLINES[pick];
+    } else {
+      root = config.services || [];
+      const list = config.taglines;
+      if (!list) {
+        taglineEl.hidden = true;
+      } else {
+        const pick = Math.floor(Math.random() * list.length);
+        taglineEl.textContent = list[pick];
+      }
+    }
+
     collectServices(root);
     current = root;
     render(current);
