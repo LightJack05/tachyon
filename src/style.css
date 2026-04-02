@@ -38,7 +38,7 @@ body {
 /* ── Main layout wrapper ───────────────────────────────────────────────────── */
 #main {
   width: min(1100px, 100%);
-  padding-top: 3.5rem;
+  padding-top: 6.5rem;
 }
 
 /* ── Breadcrumb ────────────────────────────────────────────────────────────── */
@@ -79,6 +79,22 @@ body {
 #breadcrumb .crumb.current {
   color: var(--text);
 }
+
+/* ── Tagline ───────────────────────────────────────────────────────────────── */
+#tagline {
+  position: fixed;
+  top: 3.8rem;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  padding: 0.55rem 2rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+#tagline::before { content: '> '; color: var(--accent); }
 
 /* ── App container ─────────────────────────────────────────────────────────── */
 #app {

@@ -1,3 +1,30 @@
+const TAGLINES = [
+  'Where to?',
+  'sudo navigate',
+  'Which rabbit hole today?',
+  'Pick your poison.',
+  'RTFM — or just click something.',
+  'What are we breaking today?',
+  'git checkout somewhere',
+  '404: destination not found. Pick one.',
+  'All roads lead to a 500.',
+  'Select your blast radius.',
+  'It works on my machine™',
+  'curl | bash your way through the day',
+  'In prod we trust.',
+  'Uptime not guaranteed.',
+  'rm -rf /doubts',
+  'Have you tried turning it off and on again?',
+  'Deploy early, apologize later.',
+  'All systems go (probably).',
+  'chmod +x your morning',
+  'No stack trace required.',
+  'Enterprise-grade clicking experience.',
+  'Your /dev/null moment of the day.',
+];
+document.getElementById('tagline').textContent =
+  TAGLINES[Math.floor(Math.random() * TAGLINES.length)];
+
 const app        = document.getElementById('app');
 const overlay    = document.getElementById('search-overlay');
 const input      = document.getElementById('search-input');
