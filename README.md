@@ -40,16 +40,14 @@ Because `config.yaml` is fetched at runtime (not baked into the image), you can 
 
 ### Docker (single container)
 
-Build the image locally and run it with your config bind-mounted:
+Pull the pre-built image from the GitHub Container Registry and run it with your config bind-mounted:
 
 ```sh
-docker build -t tachyon:latest .
-
 docker run -d \
   --name tachyon \
   -p 8080:80 \
   -v "$(pwd)/config.yaml:/usr/share/nginx/html/config.yaml:ro" \
-  tachyon:latest
+  ghcr.io/lightjack05/tachyon:latest
 ```
 
 The dashboard is then available at `http://localhost:8080`.
@@ -63,7 +61,7 @@ A `docker-compose.yaml` is included for local development and simple self-hosted
 ```yaml
 services:
   tachyon:
-    build: .
+    image: ghcr.io/lightjack05/tachyon:latest
     ports:
       - "8080:80"
     volumes:
@@ -76,10 +74,10 @@ Run with:
 docker compose up -d
 ```
 
-To rebuild after a source change:
+To pull the latest image:
 
 ```sh
-docker compose up -d --build
+docker compose pull
 ```
 
 ### Kubernetes

@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: tachyon
-          image: tachyon:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/lightjack05/tachyon:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           volumeMounts:
