@@ -4,6 +4,11 @@
 
 A hyper-minimalist, keyboard-driven start page and dashboard for self-hosters. No frameworks, no bundlers, no backend — just static files served by Nginx, configured at runtime via a single YAML file.
 
+Here are some looks:
+<img width="2720" height="1666" alt="image" src="https://github.com/user-attachments/assets/d9bb1f2f-22c1-49a4-ab6d-59f88b698df3" />
+<img width="2732" height="1662" alt="image" src="https://github.com/user-attachments/assets/13ad1b6c-11c5-48e1-b436-f63bf83b7d3a" />
+
+
 ---
 
 ## Table of Contents
