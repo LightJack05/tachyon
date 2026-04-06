@@ -249,6 +249,27 @@ window.addEventListener('keydown', e => {
   if (item) activate(item);
 });
 
+/* ── URL parameter navigation ─────────────────────────────────────────────── */
+function navigateToPath(path) {
+  const shortcuts = path.split('/').filter(Boolean);
+  for (const shortcut of shortcuts) {
+    const item = current.find(i => i.shortcut === shortcut);
+    if (!item) break;
+    if (item.children) {
+      history.push(current);
+      crumbNames.push({name: item.name, icon: item.icon});
+      current = item.children;
+    } else {
+      window.open(item.url, '_blank');
+      history = []; crumbNames = [];
+      current = root;
+      break;
+    }
+  }
+  render(current);
+  renderBreadcrumb();
+}
+
 /* ── Bootstrap ─────────────────────────────────────────────────────────────── */
 fetch('config.yaml')
   .then(r => r.text())
@@ -274,4 +295,7 @@ fetch('config.yaml')
     current = root;
     render(current);
     renderBreadcrumb();
+
+    const page = new URLSearchParams(window.location.search).get('page');
+    if (page) navigateToPath(page);
   });

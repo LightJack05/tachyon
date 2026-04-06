@@ -23,6 +23,7 @@ Here are some looks:
   - [Full-featured example](#full-featured-example)
   - [Schema](#schema)
 - [Navigation and keyboard shortcuts](#navigation-and-keyboard-shortcuts)
+- [URL parameters](#url-parameters)
 - [Search behaviour](#search-behaviour)
 - [Design notes](#design-notes)
 
@@ -259,6 +260,33 @@ Tachyon is designed to be driven entirely from the keyboard. The mouse works as 
 - After opening a service (by shortcut, `Enter` in search, or click), the dashboard resets to the root view automatically.
 - Group tiles are visually distinguished by a ` /` suffix on their name.
 - The shortcut key is shown as a badge in the top-right corner of each tile.
+
+---
+
+## URL parameters
+
+Tachyon supports a `page` URL parameter that navigates to a predefined location in the config hierarchy on load. This is useful for bookmarks, browser shortcuts, or links that open directly at a specific group.
+
+**Syntax:**
+
+```
+https://your-tachyon-instance/?page=<shortcut>[/<shortcut>...]
+```
+
+The value is a `/`-separated sequence of shortcut keys representing the path to follow. Each segment must match the shortcut of an item at that level in the hierarchy.
+
+**Examples:**
+
+| URL | Effect |
+|---|---|
+| `/?page=d` | Navigate into the group whose shortcut is `d`. |
+| `/?page=i/m` | Navigate into group `i`, then into its sub-group `m`. |
+| `/?page=d/g` | Navigate into group `d`, then activate the item with shortcut `g`. If it is a service, it opens in a new tab and the dashboard resets to root. |
+
+**Notes:**
+
+- If a shortcut in the path does not match any item at the current level, navigation stops at the last successful level.
+- Shortcuts are case-sensitive, matching the same rules as keyboard navigation.
 
 ---
 
